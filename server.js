@@ -67,7 +67,8 @@ io.use((socket, next) => {
   const connectHost = socket.handshake.headers.host;
   const pathPrefix = socket.handshake.headers['path-prefix'];
   if (getTunnelSocket(connectHost, pathPrefix)) {
-    return next(new Error(`${connectHost} has a existing connection`));
+    removeTunnelSocket(connectHost, pathPrefix);
+    //return next(new Error(`${connectHost} has a existing connection`));
   }
   if (!socket.handshake.auth || !socket.handshake.auth.token){
     next(new Error('Authentication error'));
